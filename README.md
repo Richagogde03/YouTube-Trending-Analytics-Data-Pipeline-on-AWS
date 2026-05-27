@@ -3,6 +3,7 @@
 ![Uploading image.png…]()
 
 
+
 ## Project Overview
 
 This project is an end-to-end cloud-based YouTube Trending Analytics Data Pipeline built using AWS services. The pipeline extracts trending YouTube video data using the YouTube Data API, stores raw data in Amazon S3, processes and transforms the data using AWS Glue, and enables analytics using Amazon Athena.
@@ -15,31 +16,31 @@ The main goal of the project is to demonstrate a modern data engineering workflo
 
 ## Workflow
 
-1. AWS Lambda extracts YouTube trending data using the YouTube API.
-2. Raw JSON and CSV files are stored in the Bronze layer in Amazon S3.
-3. S3 event notifications trigger downstream processing.
-4. AWS Glue Crawlers infer schema and update the Glue Data Catalog.
-5. AWS Glue Jobs clean, transform, validate, and convert data into Parquet format.
-6. Processed data is stored in the Silver layer.
-7. Aggregated analytical datasets are stored in the Gold layer.
-8. Amazon Athena is used to query the transformed data.
-9. Amazon SNS is used for job notifications and alerts.
+1. AWS Step Functions orchestrate the complete workflow.
+2. AWS Lambda extracts YouTube trending data using the YouTube API.ent notifications trigger downstream processing.
+3. AWS Glue Crawlers infer schema and update the Glue Data Catalog.
+4. AWS Glue Jobs clean, transform, validate, and convert data into Parquet format.
+5. Processed data is stored in the Silver layer.
+6. Aggregated analytical datasets are stored in the Gold layer.
+7. Amazon Athena is used to query the transformed data.
+8. Amazon SNS is used for job notifications and alerts.
 
 ---
 
 # AWS Services Used
 
-| Service           | Purpose                                           |
-| ----------------- | ------------------------------------------------- |
-| AWS Lambda        | Extract YouTube API data and orchestrate pipeline |
-| Amazon S3         | Store Bronze, Silver, and Gold layer data         |
-| AWS Glue          | ETL processing and schema management              |
-| Glue Crawler      | Automatically detect schema                       |
-| Glue Data Catalog | Metadata management                               |
-| Amazon Athena     | SQL-based analytics on S3 data                    |
-| Amazon SNS        | Notifications and alerts                          |
-| IAM               | Role-based access control                         |
-| CloudWatch        | Logging and monitoring                            |
+| Service            | Purpose                                           |                       |                          |
+| ------------------ | ------------------------------------------------- | --------------------- | ------------------------ |
+| AWS Lambda         | Extract YouTube API data and orchestrate pipeline |                       |                          |
+| Amazon S3          | Store Bronze, Silver, and Gold layer data         |                       |                          |
+| AWS Glue           | ETL processing and schema management              |                       |                          |
+| Glue Crawler       | Automatically detect schema                       |                       |                          |
+| Glue Data Catalog  | Metadata management                               |                       |                          |
+| Amazon Athena      | SQL-based analytics on S3 data                    |                       |                          |
+| Amazon SNS         | Notifications and alerts                          |                       |                          |
+| AWS Step Functions | Orchestrate and                                   | Amazon SNS            | Notifications and alerts |
+| AWS Step Functions | Workflow orchestration and pipeline management    | -based access control |                          |
+| CloudWatch         | Logging and monitoring                            |                       |                          |
 
 ---
 
@@ -149,7 +150,54 @@ The extraction process is automated using AWS Lambda.
 
 ---
 
-# AWS Lambda
+# AWS Step Fu# AWS Step Functions
+
+AWS Step Functions are used to orchestrate and manage the complete workflow of the YouTube Analytics Pipeline.
+
+## Responsibilities
+
+* Coordinate Lambda and Glue job execution
+* Manage sequential workflow execution
+* Handle retries and failures automatically
+* Track execution status of each stage
+* Improve reliability and monitoring of the pipeline
+
+## Workflow Orchestration
+
+1. Trigger Lambda functions for YouTube API extraction
+2. Validate extraction completion
+3. Trigger Glue Crawlers for schema updates
+4. Execute Bronze to Silver Glue ETL jobs
+5. Execute Silver to Gold transformations
+6. Send SNS notifications for success or failure
+
+## Benefits
+
+* Visual workflow orchestration
+* Better error handling and retry mechanisms
+* Centralized pipeline management
+* Improved monitoring and debugging
+* Fully serverless orchestration
+
+---
+
+# AWS Lambda Step Functions are used to orchestrate the entire data pipeline workflow.
+
+## Responsibilities
+
+* Coordinate Lambda and Glue job execution
+* Manage sequential workflow execution
+* Handle retries and failures
+* Track pipeline execution states
+* Improve workflow reliability and monitoring
+
+## Workflow Orchestration
+
+1. Trigger Lambda for data extraction
+2. Validate extraction success
+3. Start Glue Crawlers
+4. Execute Bronze to Silver Glue Jobs
+5. Execute Silver to Gold transfor
 
 AWS Lambda is used for serverless data ingestion.
 
